@@ -39,8 +39,8 @@ public class RssView {
     public static HBox panelCentral() {
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setFitToWidth(true);
-        scrollPane.setMinWidth(300);
-        scrollPane.setPrefWidth(300);
+        scrollPane.setMinWidth(320);
+        scrollPane.setPrefWidth(320);
         scrollPane.setContent(vboxItemList);
         HBox hBox = new HBox(scrollPane, webView);
         return hBox; 
@@ -51,6 +51,8 @@ public class RssView {
             Rss rss = UtilXML.procesarRss(textFieldUrlRss.getText());
             labelTituloChannel.setText(rss.getChannel().getTitle());
             labelTituloChannel.setFont(Font.font(24));
+            
+            vboxItemList.getChildren().clear();
             for(Item item : rss.getChannel().getItems()) {
                 Label labelItemTitle = new Label(item.getTitle());
                 labelItemTitle.setFont(Font.font(18));
@@ -60,6 +62,7 @@ public class RssView {
                 labelItemDescription.setWrapText(true);
                 VBox vBoxItem = new VBox();
                 vBoxItem.getChildren().addAll(labelItemTitle, labelItemDescription);
+                vBoxItem.setStyle("-fx-padding: 0 0 10 0");
                 vboxItemList.getChildren().add(vBoxItem);
                 vBoxItem.setOnMouseClicked((t) -> {
                     webView.getEngine().loadContent(item.getEncoded());
