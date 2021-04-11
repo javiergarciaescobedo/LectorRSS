@@ -2,8 +2,10 @@ package es.javiergarciaescobedo.lectorrss;
 
 import es.javiergarciaescobedo.lectorrss.beans.Item;
 import es.javiergarciaescobedo.lectorrss.beans.Rss;
+import es.javiergarciaescobedo.lectorrss.util.HtmlManipulator;
 import es.javiergarciaescobedo.lectorrss.util.UtilXML;
 import java.net.MalformedURLException;
+import java.text.Normalizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
@@ -54,7 +56,9 @@ public class RssView {
                 Label labelItemTitle = new Label(item.getTitle());
                 labelItemTitle.setFont(Font.font(18));
                 labelItemTitle.setWrapText(true);
-                Label labelItemDescription = new Label(item.getDescription());
+                //String fixedString = Normalizer.normalize(item.getDescription(), Normalizer.Form.NFC);
+                String description = HtmlManipulator.replaceHtmlEntities(item.getDescription());
+                Label labelItemDescription = new Label(description);
                 labelItemDescription.setWrapText(true);
                 vboxItemList.getChildren().addAll(labelItemTitle, labelItemDescription);
             }
